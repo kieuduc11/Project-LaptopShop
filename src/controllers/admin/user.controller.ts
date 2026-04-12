@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import { getAllRoles, handleCreateUser, handleDeleteUser, handleUpdateUser, handleViewUser } from "../../services/user.service";
+import { getAllRoles, handleCreateUser, handleDeleteUser, handleUpdateUser, handleViewUser } from "../../services/admin/user.service";
 
-const getHomePage = async (req: Request, res: Response) => {
-    return res.render("client/home/show.ejs");
-};
 
-const getCreateUserPage = async(req: Request, res: Response) => {
+const getCreateUserPage = async (req: Request, res: Response) => {
     const roles = await getAllRoles();
     return res.render("admin/user/create.ejs", {
         roles
@@ -46,4 +43,4 @@ const postUpdateUser = async (req: Request, res: Response) => {
     return res.redirect("/admin/user");
 };
 
-export { getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUser, postUpdateUser };
+export { getCreateUserPage, postCreateUser, postDeleteUser, getViewUser, postUpdateUser };

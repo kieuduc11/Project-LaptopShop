@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Dự án laptopshop" />
     <meta name="author" content="Kieu Duc" />
-    <title>Create Product</title>
+    <title>View Product</title>
     <link href="/admin/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -34,46 +34,46 @@
                             <ol class="breadcrumb mb-4">
                                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                                 <li class="breadcrumb-item"><a href="/admin/product">Products</a></li>
-                                <li class="breadcrumb-item active">Create Product</li>
+                                <li class="breadcrumb-item active">View Product</li>
                             </ol>
                             <div class="row">
                                 <div class="col-6 mx-auto">
                                     <div>
-                                        <h3 class="py-2">Create a product</h3>
+                                        <h3 class="py-2">View detail a product</h3>
                                         <% errors.forEach((error)=> { %>
                                             <div class="alert alert-danger mb-3">
                                                 <%= error %>
                                             </div>
                                             <% }); %>
-                                                <form action="/admin/handle-create-product" method="post"
-                                                    enctype="multipart/form-data">
+                                                <form action="/admin/handle-update-product/<%= product.id %>"
+                                                    method="post" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="mb-3 col-6">
                                                             <label class="form-label">Name</label>
                                                             <input name="name" type="text" class="form-control"
-                                                                value="<%= oldInput.name%>">
+                                                                value="<%= product.name%>">
                                                         </div>
                                                         <div class="mb-3 col-6">
                                                             <label class="form-label">Price</label>
                                                             <input name="price" type="number" class="form-control"
-                                                                value="<%= oldInput.price%>" step="0.01">
+                                                                value="<%= product.price%>" step="0.01">
                                                         </div>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Detail description</label>
                                                         <textarea name="detailDesc" class="form-control"
-                                                            rows="2"><%= oldInput.detailDesc%></textarea>
+                                                            rows="2"><%= product.detailDesc%></textarea>
                                                     </div>
                                                     <div class="row">
                                                         <div class="mb-3 col-6">
                                                             <label class="form-label">Short description</label>
                                                             <input name="shortDesc" type="text" class="form-control"
-                                                                value="<%= oldInput.shortDesc%>">
+                                                                value="<%= product.shortDesc%>">
                                                         </div>
                                                         <div class="mb-3 col-6">
                                                             <label class="form-label">Quantity</label>
                                                             <input name="quantity" type="number" class="form-control"
-                                                                min="0" value="<%= oldInput.quantity%>">
+                                                                min="0" value="<%= product.quantity%>">
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -82,7 +82,7 @@
                                                             <select name="factory" class="form-select">
                                                                 <% factoryOptions.forEach((option)=> { %>
                                                                     <option value="<%= option.value %>"
-                                                                        <%=oldInput.factory===option.value ? 'selected'
+                                                                        <%=product.factory===option.value ? 'selected'
                                                                         : '' %>>
                                                                         <%= option.name %>
                                                                     </option>
@@ -94,7 +94,7 @@
                                                             <select name="target" class="form-select">
                                                                 <% targetOptions.forEach((option)=> { %>
                                                                     <option value="<%= option.value %>"
-                                                                        <%=oldInput.target===option.value ? 'selected'
+                                                                        <%=product.target===option.value ? 'selected'
                                                                         : '' %>>
                                                                         <%= option.name %>
                                                                     </option>
@@ -107,12 +107,24 @@
                                                         <input name="image" class="form-control" type="file"
                                                             id="imageFile" accept=".png, .jpg, .jpeg">
                                                     </div>
-                                                    <img style="max-height: 250px; display: none;" alt="image preview"
-                                                        id="imagePreview" />
+                                                    <% if (product.image) { %>
+                                                        <div class="mb-3">
+                                                            <img id="imagePreview"
+                                                                src="/images/products/<%= product.image %>"
+                                                                alt="Product Image"
+                                                                style="max-height: 250px; display: block;">
+                                                        </div>
+                                                        <% } else { %>
+                                                            <div class="mb-3">
+                                                                <img id="imagePreview" alt="Product Image"
+                                                                    style="max-height: 250px; display: none;">
+                                                            </div>
+                                                            <% } %>
 
-                                                    <div class="mb-3 mt-2">
-                                                        <button type="submit" class="btn btn-warning">Submit</button>
-                                                    </div>
+                                                                <div class="mb-3 mt-2">
+                                                                    <button type="submit"
+                                                                        class="btn btn-warning">Update</button>
+                                                                </div>
                                                 </form>
                                     </div>
                                 </div>
