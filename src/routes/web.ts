@@ -5,11 +5,47 @@ import fileUploadMiddleware from "../middleware/multer";
 import { getDetailProduct } from "../controllers/client/product.controller";
 import { getCreateProductPage, getViewProduct, postCreateProduct, postDeleteProduct, postUpdateProduct } from "../controllers/admin/product.controller";
 import { getHomePage } from "controllers/client/home.controller";
+import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
+import passport from "passport";
+import { isAdmin, isLogin } from "src/middleware/auth";
 
 const route = express.Router();
 
 const webRoutes = (app: Express) => {
     route.get("/", getHomePage);
+    route.get("/success-redirect", getSuccessRedirectPage);
+    route.get("/product/:id", getDetailProduct);
+    route.get("/login", isLogin, getLoginPage);
+    // route.post("/login", passport.authenticate("local", {
+    //     successRedirect: "/success-redirect",
+    //     failureRedirect: "/login",
+    //     failureMessage: true,
+    // }));
+    route.post("/login", (req, res, next) => {
+        passport.authenticate("local", (err: any, user: any, info: any) => {
+            if (err) return next(err);
+
+            if (!user) {
+                (req.session as any).messages = [info.message];
+
+                return req.session.save(() => {
+                    res.redirect("/login");
+                });
+            }
+
+            req.logIn(user, (err) => {
+                if (err) return next(err);
+
+                req.session.save(() => {
+                    res.redirect("/success-redirect");
+                });
+            });
+        })(req, res, next);
+    });
+    route.post("/logout", postLogout);
+
+    route.get("/register", isLogin, getRegisterPage);
+    route.post("/register", postRegister);
 
     // admin routes
     route.get("/admin", getDashboardPage);
@@ -29,10 +65,7 @@ const webRoutes = (app: Express) => {
 
     route.get("/admin/order", getOrderPage);
 
-    // product routes
-    route.get("/product/:id", getDetailProduct);
-
-    app.use("/", route);
+    app.use("/", isAdmin, route);
 };
 
 export default webRoutes;
