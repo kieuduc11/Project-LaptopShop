@@ -17,7 +17,7 @@ model Session {
   id        String   @id
   sid       String   @unique
   data      String   @db.MediumText
-  expiresAt   DateTime
+  expiresAt DateTime
 }
 
 model User {
@@ -29,8 +29,13 @@ model User {
   phone       String? @db.VarChar(255)
   accountType String  @db.VarChar(255)
   avatar      String? @db.VarChar(255)
-  roleId Int 
-  role  Role @relation(fields: [roleId], references: [id])
+
+  roleId Int
+  role   Role @relation(fields: [roleId], references: [id])
+
+  cart Cart?
+
+  order Order[]
 
   @@map("users")
 }
@@ -45,24 +50,82 @@ model Role {
   @@map("roles")
 }
 
+model Product {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.VarChar(255)
+  price      Int
+  image      String? @db.VarChar(255)
+  detailDesc String  @db.MediumText
+  shortDesc  String  @db.VarChar(255)
+  quantity   Int
+  sold       Int?    @default(0)
+  factory    String  @db.VarChar(255)
+  target     String  @db.VarChar(255)
+
+  cartDetail CartDetail[]
+
+  orderDetail OrderDetail[]
+
+  @@map("products")
+}
+
+model Cart {
+  id  Int @id @default(autoincrement())
+  sum Int
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+
+  cartDetail CartDetail[]
+
+  @@map("carts")
+}
+
+model CartDetail {
+  id       Int @id @default(autoincrement())
+  price    Int
+  quantity Int
+
+  cartId Int
+  cart   Cart @relation(fields: [cartId], references: [id])
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId])
+  @@map("cart_detail")
+}
+
 model Order {
-  id         Int @id @default(autoincrement())
-  totalPrice Int
+  id              Int    @id @default(autoincrement())
+  totalPrice      Int
+  receiverAddress String @db.VarChar(255)
+  receiverName    String @db.VarChar(255)
+  receiverPhone   String @db.VarChar(255)
+  status          String @default("PENDING") // PENDING, CANCELED, COMPLETED
+
+  paymentMethod String // COD, Banking
+  paymentStatus String // PAYMENT_UNPAID, PAYMENT_SUCCEED, PAYMENT_FAILED
+  paymentRef    String?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  orderDetails OrderDetail[]
 
   @@map("orders")
 }
 
-model Product {
-  id         Int    @id @default(autoincrement())
-  name       String @db.VarChar(255)
-  price      Int
-  image      String? @db.VarChar(255)
-  detailDesc String @db.MediumText
-  shortDesc  String @db.VarChar(255)
-  quantity   Int
-  sold       Int? @default(0)
-  factory    String @db.VarChar(255)
-  target     String @db.VarChar(255)
+model OrderDetail {
+  id       Int @id @default(autoincrement())
+  price    Int
+  quantity Int
 
-  @@map("products")
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id])
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("order_detail")
 }

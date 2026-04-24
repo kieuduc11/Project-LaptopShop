@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Dự án laptopshop" />
     <meta name="author" content="Kieu Duc" />
-    <title>Manage Orders</title>
+    <title>View Detail Order</title>
     <link href="/admin/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
@@ -19,51 +19,43 @@
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">Manage Orders</h1>
+                            <h1 class="mt-4">View Detail Order</h1>
                             <ol class="breadcrumb mb-4">
                                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Orders</li>
+                                <li class="breadcrumb-item"><a href="/admin/order">Orders</a></li>
+                                <li class="breadcrumb-item active">View Order Detail</li>
                             </ol>
                             <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>User</th>
+                                        <th>Product</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
                                         <th>Total Price</th>
-                                        <th>Status</th>
-                                        <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% orders.forEach((order)=> { %>
+                                    <% orderDetail.forEach((item)=> { %>
                                         <tr>
                                             <td>
-                                                <%= order.id %>
+                                                <img src="/images/products/<%=item.product.image %>"
+                                                    class="img-fluid me-5 rounded-circle"
+                                                    style="width: 80px; height: 80px;" alt="">
                                             </td>
                                             <td>
-                                                <%= order.user.fullName %>
+                                                <%= item.product.name %>
                                             </td>
                                             <td>
-                                                <%= order.totalPrice %>
+                                                <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND'
+                                                    }).format(item.product.price) %>
                                             </td>
                                             <td>
-                                                <%= order.status %>
+                                                <%= item.quantity %>
                                             </td>
                                             <td>
-                                                <%= order.paymentMethod %>
-                                            </td>
-                                            <td>
-                                                <%= order.paymentStatus %>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex gap-2">
-                                                    <form action="/admin/handle-view-order/<%= order.id %>"
-                                                        method="get">
-                                                        <button class="btn btn-warning">View Detail</button>
-                                                    </form>
-                                                </div>
+                                                <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND'
+                                                    }).format(item.product.price) %>
                                             </td>
                                         </tr>
                                         <% }) %>

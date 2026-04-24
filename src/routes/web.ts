@@ -2,12 +2,14 @@ import express, { Express } from "express";
 import { postCreateUser, postDeleteUser, getViewUser, postUpdateUser, getCreateUserPage } from "../controllers/admin/user.controller";
 import { getDashboardPage, getOrderPage, getProductPage, getUserPage } from "../controllers/admin/dashboard.controller";
 import fileUploadMiddleware from "../middleware/multer";
-import { getDetailProduct } from "../controllers/client/product.controller";
+import { getCartPage, getCheckoutPage, getDetailProduct, getThanksPage, postAddProductToCart, postAddToCartFromDetailPage, postDeleteProductInCart, postHandleCartToCheckOut, postPlaceOrder } from "../controllers/client/product.controller";
 import { getCreateProductPage, getViewProduct, postCreateProduct, postDeleteProduct, postUpdateProduct } from "../controllers/admin/product.controller";
 import { getHomePage } from "controllers/client/home.controller";
 import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
 import { isAdmin, isLogin } from "src/middleware/auth";
+import { getOrderDetailPage } from "controllers/admin/order.controller";
+import { getOrderHistoryPage } from "controllers/client/order.controller";
 
 const route = express.Router();
 
@@ -47,6 +49,16 @@ const webRoutes = (app: Express) => {
     route.get("/register", isLogin, getRegisterPage);
     route.post("/register", postRegister);
 
+    route.post("/add-product-to-cart/:id", postAddProductToCart);
+    route.get("/cart", getCartPage);
+    route.post("/delete-product-in-cart/:id", postDeleteProductInCart);
+    route.post("/handle-cart-to-checkout", postHandleCartToCheckOut)
+    route.get("/check-out", getCheckoutPage);
+    route.post("/place-order", postPlaceOrder);
+    route.get("/thanks", getThanksPage);
+    route.get("/order-history", getOrderHistoryPage);
+    route.post("/add-to-cart-from-detail-page/:id", postAddToCartFromDetailPage);
+
     // admin routes
     route.get("/admin", getDashboardPage);
     route.get("/admin/user", getUserPage);
@@ -64,6 +76,7 @@ const webRoutes = (app: Express) => {
     route.post("/admin/handle-update-product/:id", fileUploadMiddleware("image", "images/products"), postUpdateProduct);
 
     route.get("/admin/order", getOrderPage);
+    route.get("/admin/handle-view-order/:id", getOrderDetailPage);
 
     app.use("/", isAdmin, route);
 };
