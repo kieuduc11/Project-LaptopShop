@@ -1,11 +1,20 @@
 import { prisma } from "config/client";
-import { ACCOUNT_TYPE } from "config/constant";
+import { ACCOUNT_TYPE, ITEM_PER_PAGE } from "config/constant";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 
-const getAllUsers = async () => {
-    const users = await prisma.user.findMany();
+const getAllUsers = async (pageNumber: number) => {
+    const take: number = ITEM_PER_PAGE;
+    const users = await prisma.user.findMany({
+        skip: (pageNumber - 1) * take,
+        take: take
+    });
     return users;
+};
+
+const countTotalUserPages = async () => {
+    const totalUser = await prisma.user.count();
+    return Math.ceil(totalUser / ITEM_PER_PAGE);
 };
 
 const getAllRoles = async () => {
@@ -65,11 +74,11 @@ const handleViewUser = async (id: string) => {
 };
 
 const handleUpdateUser = async (
-    id: string, 
+    id: string,
     fullName: string,
-    phone: string,  
-    role: string, 
-    address: string, 
+    phone: string,
+    role: string,
+    address: string,
     avatar: TAvatar
 ) => {
     await prisma.user.update({
@@ -87,4 +96,14 @@ const handleUpdateUser = async (
     });
 };
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles, hashPassword, comparePassword };
+export {
+    handleCreateUser,
+    getAllUsers,
+    handleDeleteUser,
+    handleViewUser,
+    handleUpdateUser,
+    getAllRoles,
+    hashPassword,
+    comparePassword,
+    countTotalUserPages
+};

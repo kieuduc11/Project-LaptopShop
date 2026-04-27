@@ -4,7 +4,7 @@ import { getDashboardPage, getOrderPage, getProductPage, getUserPage } from "../
 import fileUploadMiddleware from "../middleware/multer";
 import { getCartPage, getCheckoutPage, getDetailProduct, getThanksPage, postAddProductToCart, postAddToCartFromDetailPage, postDeleteProductInCart, postHandleCartToCheckOut, postPlaceOrder } from "../controllers/client/product.controller";
 import { getCreateProductPage, getViewProduct, postCreateProduct, postDeleteProduct, postUpdateProduct } from "../controllers/admin/product.controller";
-import { getHomePage } from "controllers/client/home.controller";
+import { getFilterPage, getHomePage } from "controllers/client/home.controller";
 import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
 import { isAdmin, isLogin } from "src/middleware/auth";
@@ -15,6 +15,7 @@ const route = express.Router();
 
 const webRoutes = (app: Express) => {
     route.get("/", getHomePage);
+    route.get("/products", getFilterPage);
     route.get("/success-redirect", getSuccessRedirectPage);
     route.get("/product/:id", getDetailProduct);
     route.get("/login", isLogin, getLoginPage);
