@@ -186,7 +186,7 @@
                     <div class="d-flex flex-lg-wrap justify-content-center">
                       <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fs-5 fw-bold mb-3">
                         <%= new Intl.NumberFormat('vi-VN', { style: 'currency' ,
-                                                            currency: 'VND' }).format(product.price) %>
+                        currency: 'VND' }).format(product.price) %>
                       </p>
                       <form method="post" action="/add-product-to-cart/<%= product.id %>">
                         <button class="mx-auto btn border border-secondary rounded-pill px-3 text-primary">
@@ -199,7 +199,7 @@
                 </div>
               </div>
               <% }) %>
-
+              <% if(products.length > 0) {%>
               <div class="pagination d-flex justify-content-center mt-5">
                 <li class="<%= page === 1 ? 'disabled page-item' : 'page-item' %> ">
                   <a class="page-link" href="/products?page=<%= page - 1  %>" aria-label="Previous">
@@ -219,6 +219,11 @@
                   </a>
                 </li>
               </div>
+              <%} else { %>
+              <div class="alert alert-success mt-4">
+                Không tìm thấy sản phẩm tương ứng.
+              </div>
+              <%} %>
             </div>
           </div>
         </div>
