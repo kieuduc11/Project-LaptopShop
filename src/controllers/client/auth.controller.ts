@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createUser } from "services/client/auth.service";
-import { registerSchema } from "src/validation/auth.scheme";
+import { registerSchema } from "validation/auth.scheme";
 
 const getLoginPage = (req: Request, res: Response) => {
     const { session } = req as any;

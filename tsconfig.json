@@ -5,16 +5,18 @@
     "target": "es6",
     "sourceMap": true,
     "skipLibCheck": true,
-    "ignoreDeprecations": "6.0",
+
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
+
+    "baseUrl": "./src",
+
     "paths": {
-      "config/*": ["./src/config/*"],
-      "controllers/*": ["./src/controllers/*"],
-      "models/*": ["./src/models/*"],
-      "routes/*": ["./src/routes/*"],
-      "services/*": ["./src/services/*"],
+      "config/*": ["config/*"],
+      "controllers/*": ["controllers/*"],
+      "models/*": ["models/*"],
+      "routes/*": ["routes/*"],
+      "services/*": ["services/*"]
     }
   }
 }

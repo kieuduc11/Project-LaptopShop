@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { handleCreateProduct, handleDeleteProduct, handleUpdateProduct, handleViewProduct } from "services/admin/product.service";
-import { ProductSchema, TProductSchema } from "src/validation/product.schema";
+import { ProductSchema, TProductSchema } from "validation/product.schema";
 
 const factoryOptions = [
     { name: "Apple (MacBook)", value: "APPLE" },

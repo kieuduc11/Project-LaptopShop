@@ -7,7 +7,7 @@ import { getCreateProductPage, getViewProduct, postCreateProduct, postDeleteProd
 import { getFilterPage, getHomePage } from "controllers/client/home.controller";
 import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
-import { isAdmin, isLogin } from "src/middleware/auth";
+import { isAdmin, isLogin } from "middleware/auth";
 import { getOrderDetailPage } from "controllers/admin/order.controller";
 import { getOrderHistoryPage } from "controllers/client/order.controller";
 
