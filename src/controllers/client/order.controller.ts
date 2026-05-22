@@ -7,7 +7,7 @@ const getOrderHistoryPage = async(req: Request, res: Response) => {
 
     const userId = user.id;
     const orders = await getOrderHistory(userId);
-    return res.render("client/order/order.history", {orders})
+    return res.render("client/order/order_history", {orders})
 };
 
 export {getOrderHistoryPage}
