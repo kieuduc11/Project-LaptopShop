@@ -4,7 +4,7 @@ import { getAllRoles, handleCreateUser, handleDeleteUser, handleUpdateUser, hand
 
 const getCreateUserPage = async (req: Request, res: Response) => {
     const roles = await getAllRoles();
-    return res.render("admin/user/create.ejs", {
+    return res.render("admin/user/create", {
         roles
     });
 };
@@ -27,7 +27,7 @@ const getViewUser = async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const user = await handleViewUser(id);
     const roles = await getAllRoles();
-    return res.render("admin/user/detail.ejs", {
+    return res.render("admin/user/detail", {
         id,
         user,
         roles

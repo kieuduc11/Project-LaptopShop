@@ -29,7 +29,7 @@ const getCreateProductPage = async (req: Request, res: Response) => {
         quantity: "",
     };
 
-    return res.render("admin/product/create.ejs", {
+    return res.render("admin/product/create", {
         errors,
         oldInput,
         factoryOptions,
@@ -54,7 +54,7 @@ const postCreateProduct = async (req: Request, res: Response) => {
         // error
         const errorZod = validate.error.issues;
         const errors = errorZod?.map((issue) => `${issue.message} (${issue.path[0]})`);
-        return res.render("admin/product/create.ejs", { errors, oldInput, factoryOptions, targetOptions });
+        return res.render("admin/product/create", { errors, oldInput, factoryOptions, targetOptions });
     }
 
     const file = req.file;
@@ -84,7 +84,7 @@ const getViewProduct = async (req: Request, res: Response) => {
     const product = await handleViewProduct(id);
     const errors: string[] = [];
 
-    return res.render("admin/product/detail.ejs", {
+    return res.render("admin/product/detail", {
         id,
         product,
         errors,
@@ -102,7 +102,7 @@ const postUpdateProduct = async (req: Request, res: Response) => {
         // error
         const errorZod = validate.error.issues;
         const errors = errorZod?.map((issue) => `${issue.message} (${issue.path[0]})`);
-        return res.render("admin/product/detail.ejs", { errors, product, factoryOptions, targetOptions });
+        return res.render("admin/product/detail", { errors, product, factoryOptions, targetOptions });
     }
 
     const file = req.file;

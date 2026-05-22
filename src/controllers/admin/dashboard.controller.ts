@@ -7,7 +7,7 @@ import { getAllUsers, getAllRoles, countTotalUserPages } from "services/admin/us
 
 const getDashboardPage = async (req: Request, res: Response) => {
     const info = await getDashboardInfo();
-    return res.render("admin/dashboard/show.ejs", { info });
+    return res.render("admin/dashboard/show", { info });
 };
 
 const getUserPage = async (req: Request, res: Response) => {
@@ -18,7 +18,7 @@ const getUserPage = async (req: Request, res: Response) => {
 
     const totalUserPages = await countTotalUserPages();
 
-    return res.render("admin/user/show.ejs", {
+    return res.render("admin/user/show", {
         users,
         totalUserPages,
         page: Number(page) || 1
@@ -33,7 +33,7 @@ const getProductPage = async (req: Request, res: Response) => {
 
     const totalProductPages = await countTotalProductPages();
 
-    return res.render("admin/product/show.ejs", {
+    return res.render("admin/product/show", {
         products,
         totalProductPages,
         page: Number(page) || 1
@@ -48,7 +48,7 @@ const getOrderPage = async (req: Request, res: Response) => {
     const totalOrderPages = await countTotalOrderPages();
 
     const orders = await getAllOrders(currentPageNumber);
-    return res.render("admin/order/show.ejs", {
+    return res.render("admin/order/show", {
         orders, 
         totalOrderPages,
         page: Number(page) || 1

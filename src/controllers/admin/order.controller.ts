@@ -5,7 +5,7 @@ const getOrderDetailPage = async (req: Request, res: Response) => {
     const orderId = req.params.id as string;
     const orderDetail = await getOrderDetail(Number(orderId));
 
-    return res.render("admin/order/detail.ejs", {orderDetail})
+    return res.render("admin/order/detail", {orderDetail})
 };
 
 export {getOrderDetailPage}

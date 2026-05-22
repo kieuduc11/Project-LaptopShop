@@ -10,7 +10,7 @@ const getHomePage = async (req: Request, res: Response) => {
     const totalPages = await countTotalProductClientPage();
 
     const products = await getAllProducts(currentPageNumber);
-    return res.render("client/home/show.ejs", {
+    return res.render("client/home/show", {
         products,
         totalPages,
         page: Number(page) || 1
@@ -34,7 +34,7 @@ const getFilterPage = async (req: Request, res: Response) => {
 
     const {products, totalPages} = await getProductWithFilter(currentPageNumber, factory, target, price, sort)
     
-    return res.render("client/product/filter.ejs", {
+    return res.render("client/product/filter", {
         products,
         totalPages,
         page: Number(page) || 1

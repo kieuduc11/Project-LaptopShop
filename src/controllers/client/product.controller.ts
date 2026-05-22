@@ -4,7 +4,7 @@ import { addProductToCart, deleteProductInCart, getProductById, getProductInCart
 const getDetailProduct = async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const product = await getProductById(id);
-    res.render("client/product/detail.ejs", { product });
+    res.render("client/product/detail", { product });
 };
 
 const postAddProductToCart = async (req: Request, res: Response) => {
@@ -28,7 +28,7 @@ const getCartPage = async (req: Request, res: Response) => {
             sum += currentPrice;
             return sum;
         }, 0);
-        return res.render("client/product/cart.ejs", { cartDetails, totalPrice });
+        return res.render("client/product/cart", { cartDetails, totalPrice });
     }
     return res.redirect("/login");
 };
@@ -51,7 +51,7 @@ const getCheckoutPage = async (req: Request, res: Response) => {
             sum += currentPrice;
             return sum;
         }, 0);
-        return res.render("client/product/checkout.ejs", { cartDetails, totalPrice });
+        return res.render("client/product/checkout", { cartDetails, totalPrice });
     }
     return res.redirect("/login");
 };
@@ -83,7 +83,7 @@ const getThanksPage = async (req: Request, res: Response) => {
     const user = req.user;
     if(!user) return res.redirect("/login");
 
-    return res.render("client/product/thanks.ejs");
+    return res.render("client/product/thanks");
 };
 
 const postAddToCartFromDetailPage = async (req: Request, res: Response) => {

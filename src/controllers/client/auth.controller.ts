@@ -6,7 +6,7 @@ const getLoginPage = (req: Request, res: Response) => {
     const { session } = req as any;
     const messages = session.messages || [];
     session.messages = [];
-    res.render("client/auth/login.ejs", { messages });
+    res.render("client/auth/login", { messages });
 };
 
 const getRegisterPage = (req: Request, res: Response) => {
@@ -17,7 +17,7 @@ const getRegisterPage = (req: Request, res: Response) => {
         password: "",
         passwordConfirm: ""
     };
-    res.render("client/auth/register.ejs", { errors, oldInput });
+    res.render("client/auth/register", { errors, oldInput });
 };
 
 const postRegister = async (req: Request, res: Response) => {
@@ -33,7 +33,7 @@ const postRegister = async (req: Request, res: Response) => {
             password,
             passwordConfirm
         };
-        return res.render("client/auth/register.ejs", { errors, oldInput });
+        return res.render("client/auth/register", { errors, oldInput });
     }
 
     await createUser(fullName, email, password);

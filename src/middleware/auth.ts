@@ -16,7 +16,7 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
         if (user?.role?.name === "ADMIN") {
             return next();
         }
-        return res.render("status/403.ejs");
+        return res.render("status/403");
     }
 
     // client route
